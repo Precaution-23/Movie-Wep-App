@@ -125,9 +125,10 @@ searchButton.addEventListener("click", (_) => {
 
   if (searchTerm === "") {
     alert("Enter a search term");
+  } else {
+    page = 1;
+    searchMovie(searchTerm, 1);
   }
-  page = 1;
-  searchMovie(searchTerm, 1);
 });
 
 filterInput.addEventListener("change", (event) => {
