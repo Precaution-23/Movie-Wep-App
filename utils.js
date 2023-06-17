@@ -32,7 +32,9 @@ function searchMovie(searchTerm, page) {
       renderMovies(movies);
     })
     .catch((error) => {
+        loadingMovie.hidden = true;
       alert('Sorry an error occured. Please try again..')
+      
     });
 }
 
@@ -132,9 +134,8 @@ filterInput.addEventListener("change", (event) => {
   const optionSelected = event.target.value;
 
   if (optionSelected === "undefined") {
-    alert("Select year");
+    alert("Select an option");
   }
 
-  // page = 1;
   sortMovies(optionSelected);
 });

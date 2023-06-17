@@ -24,7 +24,7 @@ body {
 
   .movie-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(4,1fr);
     grid-gap: 20px;
   }
 
@@ -126,8 +126,26 @@ body {
   }
   
 
-  @media (max-width: 600px) {
-    .movie-list {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-  }
+
+      /* Mobile View */
+      @media screen and (min-width:250px) and (max-width:480px) {
+        .movie-list{
+            display: grid;
+          grid-template-columns: repeat(1,1fr);
+          background-color: green;
+        }
+      }
+
+       /* Tablet View */
+       @media screen and (min-width:481px) and (max-width:768px) {
+        .movie-list{
+          grid-template-columns: repeat(2,1fr);
+        }
+      }
+       /* Laptop View */
+       @media screen and (min-width:769px) and (max-width:1024px) {
+        .movie-list{
+          grid-template-columns: repeat(4,1fr);
+        }
+}
+ 
