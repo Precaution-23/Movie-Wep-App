@@ -2,6 +2,10 @@ const url = "http://www.omdbapi.com/?apikey=b39ffab";
 let page = 1;
 let allMovies = [];
 
+const noMovieView = document.getElementById("no-movie");
+const loadingMovie = document.getElementById("loading");
+loadingMovie.hidden = true;
+
 async function fetchMovies(searchTerm, page = 1) {
   const apiUrl = `${url}&s=${searchTerm}&page=${page}`;
 
@@ -16,12 +20,14 @@ async function fetchMovies(searchTerm, page = 1) {
 }
 
 function searchMovie(searchTerm, page) {
+    noMovieView.hidden = true;
+    loadingMovie.hidden = false
   fetchMovies(searchTerm, page)
     .then((movies) => {
       if (movies.length < 1) {
-        const noMovieView = document.getElementById("no-movie");
         noMovieView.hidden = false;
       }
+      loadingMovie.hidden = true;
       allMovies = movies;
       renderMovies(movies);
     })
@@ -57,22 +63,29 @@ function renderMovies(movies) {
     movieTile.appendChild(movieImage);
 
     const movieTitle = document.createElement("div");
+    const movieYear = document.createElement("div");
     movieTitle.classList.add("movie-title");
-    movieTitle.textContent = `${movie.Title} - ${movie.Year}`;
+    movieYear.classList.add("movie-year");
+    movieTitle.textContent = ` Title: ${movie.Title}`;
+    movieYear.textContent = `Year: ${movie.Year}`;
     movieTile.appendChild(movieTitle);
+    movieTile.appendChild(movieYear);
 
     const viewMoreButton = document.createElement("a");
     viewMoreButton.classList.add("search-button");
     viewMoreButton.textContent = "View More";
-    viewMoreButton.href = `single.html?imdbID=${movie.imdbID}`;
+    viewMoreButton.href = `singleView.html?imdbID=${movie.imdbID}`;
     movieTile.appendChild(viewMoreButton);
 
     movieList.appendChild(movieTile);
   }
 
+  const brEl = document.getElementById("main-container");
+
   const viewMoreButton = document.createElement("button");
-  viewMoreButton.textContent = "View More";
+  viewMoreButton.textContent = "Load More";
   viewMoreButton.id = "view-more";
+  viewMoreButton.classList.add("view-more-btn")
   const searchInput = document.getElementById("search-input");
   viewMoreButton.addEventListener("click", (_) => {
     const searchTerm = searchInput.value.trim();
@@ -80,7 +93,7 @@ function renderMovies(movies) {
     searchMovie(searchTerm, page);
   });
 
-  movieList.appendChild(viewMoreButton);
+  brEl.appendChild(viewMoreButton);
 }
 
 function populateFilterDropdown(years) {
