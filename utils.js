@@ -1,11 +1,15 @@
+// defined constants 
 const url = "http://www.omdbapi.com/?apikey=b39ffab";
 const defaultImage = './images/default-image.jpg'
-let allMovies = [];
 
+
+let allMovies = [];
 const noMovieView = document.getElementById("no-movie");
 const loadingMovie = document.getElementById("loading");
 loadingMovie.hidden = true;
 
+
+// function that gets the movies from the endpoint 
 async function fetchMovies(searchTerm, page = 1) {
   const apiUrl = `${url}&s=${searchTerm}&page=${page}`;
 
@@ -19,6 +23,7 @@ async function fetchMovies(searchTerm, page = 1) {
   }
 }
 
+// function that triggers the endpoint to get movies
 function searchMovie(searchTerm, page) {
     noMovieView.hidden = true;
     loadingMovie.hidden = false
@@ -38,6 +43,7 @@ function searchMovie(searchTerm, page) {
     });
 }
 
+// the function that gets the movie list snd renders it
 function renderMovies(movies) {
   const movieList = document.getElementById("movie-list");
   const vMore = document.getElementById("view-more");
@@ -89,7 +95,8 @@ function renderMovies(movies) {
   viewMoreButton.id = "view-more";
   viewMoreButton.classList.add("view-more-btn")
   const searchInput = document.getElementById("search-input");
-  
+
+  // the view more methods that gets more related movies
   viewMoreButton.addEventListener("click", (_) => {
     const searchTerm = searchInput.value.trim();
     page += 1;
@@ -99,7 +106,7 @@ function renderMovies(movies) {
   brEl.appendChild(viewMoreButton);
 }
 
-
+// function to sort movies on ascending or descending order based on year
 function sortMovies(sortBy) {
   const filteredMovies =
     sortBy === "asc"
@@ -112,6 +119,7 @@ const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 const filterInput = document.getElementById("filter-input");
 
+// method that gets the tltle and feeds to the function to get movies
 searchButton.addEventListener("click", (_) => {
   const searchTerm = searchInput.value.trim();
 
@@ -123,6 +131,8 @@ searchButton.addEventListener("click", (_) => {
   }
 });
 
+
+// method that initiates the filter for sorting through list of movies 
 filterInput.addEventListener("change", (event) => {
   const optionSelected = event.target.value;
 

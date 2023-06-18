@@ -1,6 +1,9 @@
+// defined constants 
 const defaultImage = './images/default-image.jpg'
 const defaultSummary = "This movie doesnt come with a summary plot because we want to keep patrons excited and eager to watch the movie. Anticipate!!!"
 
+
+// function that gets the movies from the endpoint 
 async function fetchMovies(searchTerm) {
   const apiUrl = `http://www.omdbapi.com/?apikey=b39ffab&i=${searchTerm}`;
 
@@ -12,7 +15,7 @@ async function fetchMovies(searchTerm) {
     return null;
   }
 }
-
+// function that triggers the endpoint to get movies
 function searchMovie(searchTerm) {
   if (searchTerm === "") {
     return { Error: "empty search Term" };
