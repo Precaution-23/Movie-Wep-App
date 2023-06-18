@@ -1,3 +1,6 @@
+const defaultImage = './images/default-image.jpg'
+const defaultSummary = "This movie doesnt come with a summary plot because we want to keep patrons excited and eager to watch the movie. Anticipate!!!"
+
 async function fetchMovies(searchTerm) {
   const apiUrl = `http://www.omdbapi.com/?apikey=b39ffab&i=${searchTerm}`;
 
@@ -42,7 +45,7 @@ function renderMovies(movie) {
   movieTile.classList.add("movie-tile");
 
   const movieImage = document.createElement("img");
-  movieImage.src = movie.Poster;
+  movieImage.src = movie.Poster === "N/A" ? `${defaultImage}` : movie.Poster;
   movieImage.alt = movie.Title;
   movieImage.classList.add("movie-image");
   movieTile.appendChild(movieImage);
@@ -57,16 +60,20 @@ function renderMovies(movie) {
   const movieInfo = document.getElementById("movie-info");
   movieInfo.innerHTML = "";
 
-  const movieInfoTitle = document.createElement("h3");
-  movieInfoTitle.textContent = `${movie.Title} - ${movie.Year} - ${movie.Genre}`;
+  const movieInfoTitle = document.createElement("h1");
+  movieInfoTitle.textContent = `${movie.Title} - ${movie.Year}`;
   movieInfo.appendChild(movieInfoTitle);
 
-  const movieCast = document.createElement("p");
+  const movieGenre = document.createElement("h4");
+  movieGenre.textContent = `Genre: ${movie.Genre}`;
+  movieInfo.appendChild(movieGenre);
+
+  const movieCast = document.createElement("h4");
   movieCast.textContent = ` Actors: ${movie.Actors}`;
   movieInfo.appendChild(movieCast);
 
   const movieInfoPlot = document.createElement("p");
-  movieInfoPlot.textContent = `Summary: ${movie.Plot}`;
+  movieInfoPlot.textContent = movie.Plot === "N/A" ? `${defaultSummary}` : `Summary: ${movie.Plot}`;
   movieInfo.appendChild(movieInfoPlot);
 }
 

@@ -89,6 +89,7 @@ function renderMovies(movies) {
   viewMoreButton.id = "view-more";
   viewMoreButton.classList.add("view-more-btn")
   const searchInput = document.getElementById("search-input");
+  
   viewMoreButton.addEventListener("click", (_) => {
     const searchTerm = searchInput.value.trim();
     page += 1;
@@ -99,7 +100,7 @@ function renderMovies(movies) {
 }
 
 
-function sortMoviesByAscDesc(sortBy) {
+function sortMovies(sortBy) {
   const filteredMovies =
     sortBy === "asc"
       ? allMovies.sort((a, b) => a.Year - b.Year)
@@ -107,16 +108,9 @@ function sortMoviesByAscDesc(sortBy) {
   renderMovies(filteredMovies);
 }
 
-function sortMoviesByDate(optionSelected) {
-    const filteredMovies =  allMovies.filter((movie) => movie.Year == optionSelected)
-    console.log('filteredMovies', filteredMovies)
-    renderMovies(filteredMovies);
-  }
-
 const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 const filterInput = document.getElementById("filter-input");
-const dateFilter = document.getElementById("date-filter")
 
 searchButton.addEventListener("click", (_) => {
   const searchTerm = searchInput.value.trim();
