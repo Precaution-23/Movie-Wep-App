@@ -1,5 +1,5 @@
 const url = "http://www.omdbapi.com/?apikey=b39ffab";
-let page = 1;
+const defaultImage = './images/default-image.jpg'
 let allMovies = [];
 
 const noMovieView = document.getElementById("no-movie");
@@ -59,7 +59,7 @@ function renderMovies(movies) {
     movieTile.classList.add("movie-tile");
 
     const movieImage = document.createElement("img");
-    movieImage.src = movie.Poster;
+    movieImage.src = movie.Poster === "N/A" ? `${defaultImage}` : movie.Poster;
     movieImage.alt = movie.Title;
     movieImage.classList.add("movie-image");
     movieTile.appendChild(movieImage);
@@ -98,17 +98,8 @@ function renderMovies(movies) {
   brEl.appendChild(viewMoreButton);
 }
 
-function populateFilterDropdown(years) {
-  const filterInput = document.getElementById("filter-input");
-  for (let year of years) {
-    var option = document.createElement("option");
-    option.value = year;
-    option.text = year;
-    filterInput.appendChild(option);
-  }
-}
 
-function sortMovies(sortBy) {
+function sortMoviesByAscDesc(sortBy) {
   const filteredMovies =
     sortBy === "asc"
       ? allMovies.sort((a, b) => a.Year - b.Year)
@@ -116,9 +107,16 @@ function sortMovies(sortBy) {
   renderMovies(filteredMovies);
 }
 
+function sortMoviesByDate(optionSelected) {
+    const filteredMovies =  allMovies.filter((movie) => movie.Year == optionSelected)
+    console.log('filteredMovies', filteredMovies)
+    renderMovies(filteredMovies);
+  }
+
 const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 const filterInput = document.getElementById("filter-input");
+const dateFilter = document.getElementById("date-filter")
 
 searchButton.addEventListener("click", (_) => {
   const searchTerm = searchInput.value.trim();
@@ -134,9 +132,10 @@ searchButton.addEventListener("click", (_) => {
 filterInput.addEventListener("change", (event) => {
   const optionSelected = event.target.value;
 
-  if (optionSelected === "undefined") {
+  if (optionSelected === "select") {
     alert("Select an option");
   }
 
   sortMovies(optionSelected);
 });
+
