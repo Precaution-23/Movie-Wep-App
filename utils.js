@@ -80,7 +80,7 @@ function renderMovies(movies) {
     movieTile.appendChild(movieYear);
 
     const viewMoreButton = document.createElement("a");
-    viewMoreButton.classList.add("search-button");
+    viewMoreButton.classList.add("single-button");
     viewMoreButton.textContent = "View More";
     viewMoreButton.href = `singleView.html?imdbID=${movie.imdbID}`;
     movieTile.appendChild(viewMoreButton);
